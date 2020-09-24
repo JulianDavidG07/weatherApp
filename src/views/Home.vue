@@ -1,18 +1,42 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <BaseComponent />
+    {{dataArray}}
+    <ul>
+      <li v-for="(x, key) of dataArray" :key="key">{{x}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BaseComponent from "@/components/BaseComponent.vue";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    BaseComponent,
+  },
+  computed: {
+    ...mapState(["dataArray"]),
+  },
+
+  methods: {
+    ...mapMutations(["updateData"]),
+    ...mapActions(["getData"]),
+  },
+
+  created() {
+    this.getData();
+  },
+};
 </script>
+
+<style scoped>
+.container {
+  background-color: var(--main-bg-color);
+  height: 100vh;
+}
+</style>
+
